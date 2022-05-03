@@ -19,6 +19,10 @@ npx bookmonkey-api
 ### Starting the Angular Client
 
 ```bash
+# Install needed dependencies
+npm install
+
+# Start the WebServer on localhost: 4200
 npm start
 ```
 
