@@ -6,3 +6,6 @@ const bookFeature = createFeatureSelector<{ bookCollection: BookCollectionSlice 
 const bookCollectionSlice = createSelector(bookFeature, feature => feature.bookCollection);
 
 export const bookCollection = createSelector(bookCollectionSlice, slice => slice.entities);
+
+export const bookByIsbn = (isbn: string) =>
+  createSelector(bookCollection, books => books.find(book => book.isbn === isbn));
