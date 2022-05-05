@@ -8,22 +8,20 @@ const initialState: BookCollectionSlice = {
 
 export const bookCollectionReducer = createReducer(
   initialState,
+
   on(
     createBookStart,
-    (state, action): BookCollectionSlice => {
-      const nextState = { ...state };
-      nextState.entities = [...nextState.entities, action.book];
-
-      return nextState;
-    }
+    (slice, { book }): BookCollectionSlice => ({
+      ...slice,
+      entities: [...slice.entities, book]
+    })
   ),
+
   on(
     loadBooksComplete,
-    (slice, { books }): BookCollectionSlice => {
-      return {
-        ...slice,
-        entities: books
-      };
-    }
+    (slice, { books }): BookCollectionSlice => ({
+      ...slice,
+      entities: books
+    })
   )
 );
