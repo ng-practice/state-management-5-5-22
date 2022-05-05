@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Store } from '@ngrx/store';
-import { loadBooksStart } from './store';
+import { loadBooksStarted } from './store';
 
 @Component({
   selector: 'ws-book',
@@ -10,6 +10,6 @@ export class BookComponent implements OnInit {
   constructor(private store: Store) {}
 
   ngOnInit(): void {
-    this.store.dispatch(loadBooksStart());
+    this.store.dispatch(loadBooksStarted());
   }
 }

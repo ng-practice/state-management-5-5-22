@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
 import { Book } from '../models';
-import { bookCollection } from '../store';
+import { bookCollection, loadBooksStarted } from '../store';
 
 @Component({
   selector: 'ws-book-list',
@@ -14,5 +14,9 @@ export class BookListComponent {
 
   constructor(private store: Store) {
     this.books$ = this.store.select(bookCollection);
+  }
+
+  reload() {
+    this.store.dispatch(loadBooksStarted());
   }
 }

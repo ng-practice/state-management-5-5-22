@@ -1,5 +1,5 @@
 <h2 class="mat-h2">Books</h2>
-
+<button mat-button (click)="reload()">RELOAD</button>
 <div class="books-grid">
   <ws-book-card [content]="book" *ngFor="let book of books$ | async"></ws-book-card>
 </div>

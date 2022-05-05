@@ -3,8 +3,9 @@ import { Book } from '../models';
 
 export const createBookStart = createAction('[Book] Create Book Started', props<{ book: Book }>());
 
-export const loadBooksStart = createAction('[Book] Loading Books Started');
-export const loadBooksComplete = createAction('[Book] Loading Books Completed', props<{ books: Book[] }>());
+export const loadBooksStarted = createAction('[Book] Loading Books Started');
+export const loadBooksCompleted = createAction('[Book] Loading Books Completed', props<{ books: Book[] }>());
+export const loadBooksFailed = createAction('[Book] Loading Books Failed');
 
 // export const bookActions = createActionGroup({
 //   source: '[Book]',
