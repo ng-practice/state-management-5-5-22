@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
+import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
-import { BookApiService } from '../book-api.service';
 import { Book } from '../models';
 
 @Component({
@@ -11,7 +11,7 @@ import { Book } from '../models';
 export class BookListComponent {
   books$: Observable<Book[]>;
 
-  constructor(private bookData: BookApiService) {
-    this.books$ = this.bookData.getAll();
+  constructor(private store: Store) {
+    this.books$ = this.store.select((state: any) => state['book'].bookCollection.entities);
   }
 }
