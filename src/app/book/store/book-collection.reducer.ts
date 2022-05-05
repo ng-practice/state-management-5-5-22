@@ -1,5 +1,5 @@
 import { createReducer, on } from '@ngrx/store';
-import { createBookStart } from './book-collection.actions';
+import { createBookStart, loadBooksComplete } from './book-collection.actions';
 import { BookCollectionSlice } from './book-collection.slice';
 
 const initialState: BookCollectionSlice = {
@@ -15,6 +15,15 @@ export const bookCollectionReducer = createReducer(
       nextState.entities = [...nextState.entities, action.book];
 
       return nextState;
+    }
+  ),
+  on(
+    loadBooksComplete,
+    (slice, { books }): BookCollectionSlice => {
+      return {
+        ...slice,
+        entities: books
+      };
     }
   )
 );

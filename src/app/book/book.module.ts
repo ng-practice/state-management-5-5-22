@@ -8,6 +8,7 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
 import { MatListModule } from '@angular/material/list';
+import { EffectsModule } from '@ngrx/effects';
 import { StoreModule } from '@ngrx/store';
 import { bookFeatureReducers } from '@store/book';
 import { BookCardComponent } from './book-card/book-card.component';
@@ -18,6 +19,7 @@ import { BookNewComponent } from './book-new/book-new.component';
 import { BookRoutingModule } from './book-routing.module';
 import { BookComponent } from './book.component';
 import { bookFeatureName } from './store';
+import { BookCollectionEffects } from './store/book-collection.effects';
 
 @NgModule({
   imports: [
@@ -34,7 +36,8 @@ import { bookFeatureName } from './store';
     MatInputModule,
     MatListModule,
 
-    StoreModule.forFeature(bookFeatureName, bookFeatureReducers)
+    StoreModule.forFeature(bookFeatureName, bookFeatureReducers),
+    EffectsModule.forFeature([BookCollectionEffects])
   ],
   declarations: [
     BookComponent,
