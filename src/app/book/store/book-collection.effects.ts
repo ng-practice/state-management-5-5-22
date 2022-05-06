@@ -25,7 +25,6 @@ export class BookCollectionEffects {
     return this.actions$.pipe(
       ofType(bookCreationActions.creationStarted),
       exhaustMap(({ book }) => this.bookApi.create(book)),
-      tap(book => this.router.navigateByUrl(`/books/${book.isbn}`)),
       map(book => bookCreationActions.creationSucceeded({ book }))
     );
   });
@@ -46,10 +45,19 @@ export class BookCollectionEffects {
     return this.actions$.pipe(
       ofType(bookUpdateActions.updateStarted),
       exhaustMap(({ book }) => this.bookApi.update(book.isbn, book)),
-      tap(book => this.router.navigateByUrl(`/books/${book.isbn}`)),
       map(book => bookUpdateActions.updateSucceeded({ book }))
     );
   });
+
+  navigateToBookDetails$ = createEffect(
+    () => {
+      return this.actions$.pipe(
+        ofType(bookUpdateActions.updateSucceeded, bookCreationActions.creationSucceeded),
+        tap(({ book }) => this.router.navigateByUrl(`/books/${book.isbn}`))
+      );
+    },
+    { dispatch: false }
+  );
 
   constructor(private actions$: Actions, private router: Router, private bookApi: BookApiService) {}
 }
