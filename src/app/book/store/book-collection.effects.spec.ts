@@ -3,6 +3,7 @@ import { createServiceFactory } from '@ngneat/spectator';
 import { EffectsModule } from '@ngrx/effects';
 import { Store, StoreModule } from '@ngrx/store';
 import { of } from 'rxjs';
+import { instance, mock, when } from 'ts-mockito';
 import { BookApiService } from '../book-api.service';
 import { bookNa } from '../models';
 import { booksLoadingActions } from './book-collection.actions';
@@ -11,6 +12,10 @@ import { bookCollection } from './book-collection.selectors';
 import { bookFeatureName, bookFeatureReducers } from './book.feature';
 
 describe(BookCollectionEffects.name, () => {
+  const bookApiMock = mock(BookApiService);
+
+  when(bookApiMock.getAll()).thenReturn(of([bookNa()]));
+
   const createService = createServiceFactory({
     service: Store,
     imports: [
@@ -19,7 +24,7 @@ describe(BookCollectionEffects.name, () => {
       EffectsModule.forRoot([BookCollectionEffects]),
       RouterTestingModule
     ],
-    providers: [{ provide: BookApiService, useFactory: () => ({ getAll: () => of([bookNa()]) }) }]
+    providers: [{ provide: BookApiService, useFactory: () => instance(bookApiMock) }]
   });
 
   describe('When a book is created successfully', () => {
