@@ -49,15 +49,12 @@ export class BookCollectionEffects {
     );
   });
 
-  navigateToBookDetails$ = createEffect(
-    () => {
-      return this.actions$.pipe(
-        ofType(bookUpdateActions.updateSucceeded, bookCreationActions.creationSucceeded),
-        tap(({ book }) => this.router.navigateByUrl(`/books/${book.isbn}`))
-      );
-    },
-    { dispatch: false }
-  );
+  navigateToBookDetails$ = createEffect(() => {
+    return this.actions$.pipe(
+      ofType(bookUpdateActions.updateSucceeded, bookCreationActions.creationSucceeded),
+      tap(({ book }) => this.router.navigateByUrl(`/books/${book.isbn}`))
+    );
+  });
 
   constructor(private actions$: Actions, private router: Router, private bookApi: BookApiService) {}
 }
