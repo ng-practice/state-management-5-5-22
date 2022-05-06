@@ -1,5 +1,5 @@
 import { byTestId, createComponentFactory } from '@ngneat/spectator';
-import { MockStore, provideMockStore } from '@ngrx/store/testing';
+import { provideMockStore } from '@ngrx/store/testing';
 import { BookCardComponent } from '../book-card/book-card.component';
 import { bookNa } from '../models';
 import { bookCollection } from '../store';
@@ -9,18 +9,16 @@ describe(BookListComponent.name, () => {
   const createComponent = createComponentFactory({
     component: BookListComponent,
     declarations: [BookCardComponent],
-    providers: [provideMockStore()],
-    detectChanges: false
+    providers: [
+      provideMockStore({
+        selectors: [{ selector: bookCollection as any, value: [bookNa(), bookNa()] }]
+      })
+    ]
   });
 
   describe('When books are present', () => {
     it('renders books', () => {
       const spectator = createComponent();
-
-      const store = spectator.inject(MockStore);
-      store.overrideSelector(bookCollection as any, [bookNa(), bookNa()]);
-
-      spectator.detectChanges();
 
       const bookCards = spectator.queryAll(byTestId('book-card'));
 
