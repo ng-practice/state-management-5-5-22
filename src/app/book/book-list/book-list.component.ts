@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
 import { Book } from '../models';
@@ -9,10 +9,12 @@ import { bookCollection, booksLoadingActions } from '../store';
   styleUrls: ['./book-list.component.scss'],
   templateUrl: 'book-list.component.html'
 })
-export class BookListComponent {
-  books$: Observable<readonly Book[]>;
+export class BookListComponent implements OnInit {
+  books$!: Observable<readonly Book[]>;
 
-  constructor(private store: Store) {
+  constructor(private store: Store) {}
+
+  ngOnInit(): void {
     this.books$ = this.store.select(bookCollection);
   }
 

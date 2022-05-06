@@ -9,7 +9,8 @@ describe(BookListComponent.name, () => {
   const createComponent = createComponentFactory({
     component: BookListComponent,
     declarations: [BookCardComponent],
-    providers: [provideMockStore()]
+    providers: [provideMockStore()],
+    detectChanges: false
   });
 
   describe('When books are present', () => {
@@ -19,8 +20,11 @@ describe(BookListComponent.name, () => {
       const store = spectator.inject(MockStore);
       store.overrideSelector(bookCollection as any, [bookNa(), bookNa()]);
 
+      spectator.detectChanges();
+
       const bookCards = spectator.queryAll(byTestId('book-card'));
-      expect(bookCards).toHaveLength(3);
+
+      expect(bookCards).toHaveLength(2);
     });
   });
 });
