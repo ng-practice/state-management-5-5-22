@@ -1,6 +1,8 @@
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
-import { Actions, createEffect, ofType } from '@ngrx/effects';
+import { Actions, concatLatestFrom, createEffect, ofType } from '@ngrx/effects';
+import { Store } from '@ngrx/store';
+import { selectRouteParam } from '@store/router';
 import { exhaustMap, map, tap } from 'rxjs';
 import { BookApiService } from '../book-api.service';
 import {
@@ -32,7 +34,8 @@ export class BookCollectionEffects {
   deleteBook$ = createEffect(() => {
     return this.actions$.pipe(
       ofType(bookDeletionActions.deletionStarted),
-      exhaustMap(({ isbn }) =>
+      concatLatestFrom(() => this.store.select(selectRouteParam('isbn'))),
+      exhaustMap(([, isbn]) =>
         this.bookApi.delete(isbn || '').pipe(
           tap(() => this.router.navigateByUrl('/')),
           map(() => bookDeletionActions.deletionSucceeded({ isbn }))
@@ -59,5 +62,10 @@ export class BookCollectionEffects {
     { dispatch: false }
   );
 
-  constructor(private actions$: Actions, private router: Router, private bookApi: BookApiService) {}
+  constructor(
+    private actions$: Actions,
+    private store: Store,
+    private router: Router,
+    private bookApi: BookApiService
+  ) {}
 }

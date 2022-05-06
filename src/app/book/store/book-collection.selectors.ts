@@ -1,5 +1,6 @@
 import { createEntityAdapter } from '@ngrx/entity';
 import { createFeatureSelector, createSelector } from '@ngrx/store';
+import { selectRouteParam } from '@store/router';
 import { Book } from '../models';
 import { bookFeatureName, BookFeatureState } from './book.feature';
 
@@ -10,9 +11,8 @@ const bookCollectionSlice = createSelector(bookFeature, feature => feature.bookC
 
 export const { selectAll: bookCollection } = adapter.getSelectors(bookCollectionSlice);
 
-export const bookByIsbn = (isbn: string) =>
-  createSelector(bookCollection, books => {
-    const found = books.find(book => book.isbn === isbn);
+export const bookByIsbn = createSelector(selectRouteParam('isbn'), bookCollection, (isbn, books) => {
+  const found = books.find(book => book.isbn === isbn);
 
-    return !!found ? { ...found } : null;
-  });
+  return !!found ? { ...found } : null;
+});

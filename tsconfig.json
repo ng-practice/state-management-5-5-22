@@ -18,7 +18,8 @@
     "module": "es2020",
     "lib": ["es2018", "dom"],
     "paths": {
-      "@store/book": ["./src/app/book/store/index.ts"]
+      "@store/book": ["./src/app/book/store/index.ts"],
+      "@store/router": ["./src/app/store/router/index.ts"]
     }
   },
   "angularCompilerOptions": {

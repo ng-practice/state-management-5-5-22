@@ -1,0 +1,1 @@
+export const routerFeatureName = 'router';

@@ -12,8 +12,8 @@ export const bookCreationActions = createActionGroup({
 export const bookDeletionActions = createActionGroup({
   source: 'Book',
   events: {
-    'Deletion Started': props<{ isbn: string | null }>(),
-    'Deletion Succeeded': props<{ isbn: string | null }>()
+    'Deletion Started': emptyProps(),
+    'Deletion Succeeded': props<{ isbn?: string }>()
   }
 });
 
