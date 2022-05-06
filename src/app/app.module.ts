@@ -22,7 +22,19 @@ import { CommonComponentsModule } from './common-components/common-components.mo
     HammerModule,
     CommonComponentsModule,
     AppRoutingModule,
-    StoreModule.forRoot({}, {}),
+    StoreModule.forRoot(
+      {},
+      {
+        runtimeChecks: {
+          strictActionImmutability: true,
+          strictActionSerializability: true,
+          strictActionTypeUniqueness: true,
+          strictActionWithinNgZone: true,
+          strictStateImmutability: true,
+          strictStateSerializability: true
+        }
+      }
+    ),
     StoreDevtoolsModule.instrument({ maxAge: 25, logOnly: environment.production }),
     EffectsModule.forRoot([])
   ],
