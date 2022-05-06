@@ -7,4 +7,8 @@ const bookCollectionSlice = createSelector(bookFeature, feature => feature.bookC
 export const bookCollection = createSelector(bookCollectionSlice, slice => slice.entities);
 
 export const bookByIsbn = (isbn: string) =>
-  createSelector(bookCollection, books => books.find(book => book.isbn === isbn));
+  createSelector(bookCollection, books => {
+    const found = books.find(book => book.isbn === isbn);
+
+    return !!found ? { ...found } : null;
+  });

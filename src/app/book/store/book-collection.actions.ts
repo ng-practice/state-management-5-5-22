@@ -1,17 +1,34 @@
-import { createAction, props } from '@ngrx/store';
+import { createActionGroup, emptyProps, props } from '@ngrx/store';
 import { Book } from '../models';
 
-export const createBookStart = createAction('[Book] Create Book Started', props<{ book: Book }>());
+export const bookCreationActions = createActionGroup({
+  source: 'Book',
+  events: {
+    'Creation Started': props<{ book: Book }>(),
+    'Creation Succeeded': props<{ book: Book }>()
+  }
+});
 
-export const loadBooksStarted = createAction('[Book] Loading Books Started');
-export const loadBooksCompleted = createAction('[Book] Loading Books Completed', props<{ books: Book[] }>());
-export const loadBooksFailed = createAction('[Book] Loading Books Failed');
+export const bookDeletionActions = createActionGroup({
+  source: 'Book',
+  events: {
+    'Deletion Started': props<{ isbn: string | null }>(),
+    'Deletion Succeeded': props<{ isbn: string | null }>()
+  }
+});
 
-// export const bookActions = createActionGroup({
-//   source: '[Book]',
-//   events: {
-//     'Create Book': props<{ book: Book }>(),
-//     'Load Book': props<{ book: Book }>(),
-//     'Update Book': props<{ book: Book }>()
-//   }
-// });
+export const bookUpdateActions = createActionGroup({
+  source: 'Book',
+  events: {
+    'Update Started': props<{ book: Book }>(),
+    'Update Succeeded': props<{ book: Book }>()
+  }
+});
+
+export const booksLoadingActions = createActionGroup({
+  source: 'Books',
+  events: {
+    'Loading Started': emptyProps(),
+    'Loading Succeeded': props<{ books: Book[] }>()
+  }
+});

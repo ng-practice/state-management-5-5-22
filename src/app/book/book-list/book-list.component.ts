@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
 import { Book } from '../models';
-import { bookCollection, loadBooksStarted } from '../store';
+import { bookCollection, booksLoadingActions } from '../store';
 
 @Component({
   selector: 'ws-book-list',
@@ -17,6 +17,6 @@ export class BookListComponent {
   }
 
   reload() {
-    this.store.dispatch(loadBooksStarted());
+    this.store.dispatch(booksLoadingActions.loadingStarted());
   }
 }

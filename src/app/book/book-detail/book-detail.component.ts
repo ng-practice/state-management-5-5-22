@@ -2,10 +2,10 @@ import { Component } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
-import { exhaustMap, switchMap, tap } from 'rxjs/operators';
+import { switchMap } from 'rxjs/operators';
 import { BookApiService } from '../book-api.service';
 import { Book } from '../models';
-import { bookByIsbn } from '../store';
+import { bookByIsbn, bookDeletionActions } from '../store';
 
 @Component({
   selector: 'ws-book-detail',
@@ -13,7 +13,7 @@ import { bookByIsbn } from '../store';
   templateUrl: 'book-detail.component.html'
 })
 export class BookDetailComponent {
-  public book$: Observable<Book | undefined>;
+  public book$: Observable<Book | null>;
 
   constructor(
     private store: Store,
@@ -25,11 +25,7 @@ export class BookDetailComponent {
   }
 
   remove() {
-    this.route.params
-      .pipe(
-        exhaustMap(params => this.bookService.delete(params.isbn)),
-        tap(() => this.router.navigateByUrl('/'))
-      )
-      .subscribe();
+    const isbn = this.route.snapshot.paramMap.get('isbn');
+    this.store.dispatch(bookDeletionActions.deletionStarted({ isbn }));
   }
 }

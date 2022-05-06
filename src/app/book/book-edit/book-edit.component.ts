@@ -5,7 +5,7 @@ import { Subscription } from 'rxjs';
 import { switchMap, tap } from 'rxjs/operators';
 import { BookApiService } from '../book-api.service';
 import { Book, bookNa } from '../models';
-import { bookByIsbn } from '../store';
+import { bookByIsbn, bookUpdateActions } from '../store';
 
 @Component({
   selector: 'ws-book-edit',
@@ -14,7 +14,7 @@ import { bookByIsbn } from '../store';
 })
 export class BookEditComponent implements OnInit, OnDestroy {
   sink = new Subscription();
-  book: Book = bookNa();
+  book: Book | null = bookNa();
 
   constructor(private store: Store, private route: ActivatedRoute, private bookService: BookApiService) {}
 
@@ -34,6 +34,7 @@ export class BookEditComponent implements OnInit, OnDestroy {
   }
 
   save() {
-    this.sink.add(this.bookService.update(this.book.isbn, this.book).subscribe());
+    if (!this.book) return;
+    this.store.dispatch(bookUpdateActions.updateStarted({ book: this.book }));
   }
 }
